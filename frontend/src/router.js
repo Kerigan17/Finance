@@ -10,7 +10,7 @@ export class Router {
                 template: 'templates/signup.html',
                 styles: 'styles/form.css',
                 load: () => {
-                    new Form();
+                    new Form('signup');
                 }
             },
             {
@@ -19,7 +19,7 @@ export class Router {
                 template: '/templates/login.html',
                 styles: 'styles/form.css',
                 load: () => {
-                    new Form();
+                    new Form('login');
                 }
             },
             {

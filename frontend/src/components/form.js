@@ -1,9 +1,9 @@
 export class Form {
-    constructor() {
+    constructor(page) {
         this.processElement = null;
         this.passwordOne = null;
         this.passwordTwo = null;
-        this.linkButton = null;
+        this.page = page;
         this.fields = [
             {
                 name: 'email',
@@ -23,19 +23,13 @@ export class Form {
 
         let that = this;
 
-        this.linkButton = document.getElementById('link-button');
-        this.linkButton.onclick = () => {
-            location.href = '#/signup';
-        }
-
         this.processElement = document.getElementById('process');
         this.processElement.onclick = () => {
-            //that.checkUserProfile()
             that.processForm();
         };
 
-        //если hash === #/signup
-        if (window.location.hash === '#/signup') {
+        //если signup
+        if (this.page === 'signup') {
             this.fields.push(
                 {
                     name: 'fio',
@@ -45,24 +39,19 @@ export class Form {
                     valid: false
                 },
                 {
-                    name: 'passwordTwo',
-                    id: 'passwordTwo',
+                    name: 'passwordRepeat',
+                    id: 'passwordRepeat',
                     element: null,
                     regex: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/,
                     valid: false
                 }
             );
 
-            this.linkButton.onclick = () => {
-                location.href = '#/login';
-            };
-
             this.processElement.onclick = () => {
                 if (!that.passwordsChecked()) {
                     alert('Пароли не совпадают')
                 } else {
                     alert('Регистрация завершена')
-                    //that.createUserProfile();
                     that.processForm();
                 }
             };
@@ -78,7 +67,7 @@ export class Form {
 
     passwordsChecked() {
         this.passwordOne = document.getElementById('password');
-        this.passwordTwo = document.getElementById('passwordTwo');
+        this.passwordTwo = document.getElementById('passwordRepeat');
 
         return this.passwordOne.value === this.passwordTwo.value
     }
@@ -105,19 +94,48 @@ export class Form {
         return validForm;
     }
 
-    createUserProfile() {
-
-    }
-
-    checkUserProfile() {
-
-    }
-
-    processForm() {
+    async processForm() {
         if (this.validateForm()) {
-            location.href = '#/home'
-        } else {
-            location.href = '#/login'
+
+            if (this.page === 'signup') {
+
+                try {
+                    const response = await fetch('http://localhost:3000/api/signup', {
+                        method: 'POST',
+                        headers: {
+                            'Content-type': 'application/json',
+                            'Accept': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            name: this.fields.find(item => item.name === 'fio').element.value.split(' ')[1],
+                            lastName: this.fields.find(item => item.name === 'fio').element.value.split(' ')[0],
+                            email: this.fields.find(item => item.name === 'email').element.value,
+                            password: this.fields.find(item => item.name === 'password').element.value,
+                            passwordRepeat: this.fields.find(item => item.name === 'passwordRepeat').element.value,
+                        })
+                    });
+
+                    if (response.status < 200 || response.status >= 300) {
+                        throw new Error(response.message);
+                    }
+
+                    const result = await response.json();
+                    if (result) {
+                        if (result.error || !result.user) {
+                            throw new Error(result.message);
+                        }
+
+                        location.href = '#/home'
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+
+
+
+            } else {
+
+            }
         }
     }
 }
