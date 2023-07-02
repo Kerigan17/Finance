@@ -98,7 +98,6 @@ export class Form {
         if (this.validateForm()) {
 
             if (this.page === 'signup') {
-
                 try {
                     const response = await fetch('http://localhost:3000/api/signup', {
                         method: 'POST',
@@ -124,18 +123,49 @@ export class Form {
                         if (result.error || !result.user) {
                             throw new Error(result.message);
                         }
-
-                        location.href = '#/home'
+                        location.href = '#/home';
                     }
                 } catch (error) {
                     console.log(error);
                 }
-
-
-
             } else {
+                try {
+                    const response = await fetch('http://localhost:3000/api/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-type': 'application/json',
+                            'Accept': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            email: this.fields.find(item => item.name === 'email').element.value,
+                            password: this.fields.find(item => item.name === 'password').element.value,
+                            rememberMe: false
+                        })
+                    });
 
+                    if (response.status < 200 || response.status >= 300) {
+                        throw new Error(response.message);
+                    }
+
+                    const result = await response.json();
+                    if (result) {
+                        if (result.error || !result.user) {
+                            throw new Error(result.message);
+                        }
+
+                        localStorage.setItem("accessToken", result.tokens.accessToken)
+                        localStorage.setItem("refreshToken", result.tokens.refreshToken)
+
+                        location.href = '#/home';
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
             }
         }
+    }
+
+    async refreshToken(){
+
     }
 }

@@ -8,6 +8,8 @@ export class Home {
         this.linksClick();
 
 
+
+
     }
 
     linksClick() {
@@ -19,6 +21,36 @@ export class Home {
             }
         })
     }
+
+    // async getBalance() {
+    //     try {
+    //         const response = await fetch('http://localhost:3000/api/signup', {
+    //             method: 'GET',
+    //             headers: {
+    //                 'Content-type': 'application/json',
+    //                 'Accept': 'application/json',
+    //             },
+    //             body: JSON.stringify({
+    //
+    //             })
+    //         });
+    //
+    //         if (response.status < 200 || response.status >= 300) {
+    //             throw new Error(response.message);
+    //         }
+    //
+    //         const result = await response.json();
+    //         if (result) {
+    //             if (result.error || !result.user) {
+    //                 throw new Error(result.message);
+    //             }
+    //
+    //             location.href = '#/home'
+    //         }
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }
 
 
 
