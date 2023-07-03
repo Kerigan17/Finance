@@ -6,10 +6,6 @@ export class Home {
         })
 
         this.linksClick();
-
-
-
-
     }
 
     linksClick() {

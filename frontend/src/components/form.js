@@ -125,11 +125,10 @@ export class Form {
                     const result = await CustomHttp.request(config.host + '/login', 'POST', {
                         email: this.fields.find(item => item.name === 'email').element.value,
                         password: this.fields.find(item => item.name === 'password').element.value,
-                        rememberMe: false
+                        rememberMe: document.getElementById('flexCheckDefault').checked
                     });
 
                     if (result) {
-                        console.log(result)
                         if (result.error || !result.user || !result.tokens.refreshToken || !result.tokens.accessToken) {
                             throw new Error(result.message);
                         }

@@ -93,3 +93,7 @@ li.active {
 #dashboard-collapse a {
     padding: 12px 16px;
 }
+
+.dropdown div:hover {
+    cursor: pointer;
+}

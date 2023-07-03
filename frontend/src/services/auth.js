@@ -21,20 +21,20 @@ export class Auth {
                 if (result && !result.error) {
                     this.setTokens(result.accessTokenKey, result.refreshToken);
                     return true;
-                } else {
-                    throw new Error(result.message);
                 }
             }
         }
+        this.removeTokens();
+        location.href = '#/login';
         return false;
     }
 
     static setTokens(accessToken, refreshToken) {
-        localStorage.setItem('accessToken', this.accessTokenKey);
-        localStorage.setItem('refreshToken', this.refreshTokenKey);
+        localStorage.setItem(this.accessTokenKey, accessToken);
+        localStorage.setItem(this.refreshTokenKey, refreshToken);
     }
-    static removeTokens(accessToken, refreshToken) {
-        localStorage.setItem('accessToken', this.accessTokenKey);
-        localStorage.setItem('refreshToken', this.refreshTokenKey);
+    static removeTokens() {
+        localStorage.removeItem(this.accessTokenKey);
+        localStorage.removeItem(this.refreshTokenKey);
     }
 }
