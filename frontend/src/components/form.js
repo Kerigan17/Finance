@@ -1,5 +1,6 @@
 import {CustomHttp} from "../services/custom-http.js";
 import {Auth} from "../services/auth.js";
+import config from "../../config/config.js";
 
 export class Form {
     constructor(page) {
@@ -102,7 +103,7 @@ export class Form {
 
             if (this.page === 'signup') {
                 try {
-                    const result = await CustomHttp.request('http://localhost:3000/api/signup', 'POST', {
+                    const result = await CustomHttp.request(config.host + '/signup', 'POST', {
                         name: this.fields.find(item => item.name === 'fio').element.value.split(' ')[1],
                         lastName: this.fields.find(item => item.name === 'fio').element.value.split(' ')[0],
                         email: this.fields.find(item => item.name === 'email').element.value,
@@ -121,14 +122,15 @@ export class Form {
                 }
             } else {
                 try {
-                    const result = await CustomHttp.request('http://localhost:3000/api/login', 'POST', {
+                    const result = await CustomHttp.request(config.host + '/login', 'POST', {
                         email: this.fields.find(item => item.name === 'email').element.value,
                         password: this.fields.find(item => item.name === 'password').element.value,
                         rememberMe: false
                     });
 
                     if (result) {
-                        if (result.error || !result.user || !result.refreshToken || !result.accessToken) {
+                        console.log(result)
+                        if (result.error || !result.user || !result.tokens.refreshToken || !result.tokens.accessToken) {
                             throw new Error(result.message);
                         }
                         Auth.setTokens(result.accessToken, result.refreshToken);
