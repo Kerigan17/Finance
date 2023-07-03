@@ -1,3 +1,6 @@
+import {CustomHttp} from "../services/custom-http.js";
+import {Auth} from "../services/auth.js";
+
 export class Form {
     constructor(page) {
         this.processElement = null;
@@ -99,26 +102,14 @@ export class Form {
 
             if (this.page === 'signup') {
                 try {
-                    const response = await fetch('http://localhost:3000/api/signup', {
-                        method: 'POST',
-                        headers: {
-                            'Content-type': 'application/json',
-                            'Accept': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            name: this.fields.find(item => item.name === 'fio').element.value.split(' ')[1],
-                            lastName: this.fields.find(item => item.name === 'fio').element.value.split(' ')[0],
-                            email: this.fields.find(item => item.name === 'email').element.value,
-                            password: this.fields.find(item => item.name === 'password').element.value,
-                            passwordRepeat: this.fields.find(item => item.name === 'passwordRepeat').element.value,
-                        })
+                    const result = await CustomHttp.request('http://localhost:3000/api/signup', 'POST', {
+                        name: this.fields.find(item => item.name === 'fio').element.value.split(' ')[1],
+                        lastName: this.fields.find(item => item.name === 'fio').element.value.split(' ')[0],
+                        email: this.fields.find(item => item.name === 'email').element.value,
+                        password: this.fields.find(item => item.name === 'password').element.value,
+                        passwordRepeat: this.fields.find(item => item.name === 'passwordRepeat').element.value,
                     });
 
-                    if (response.status < 200 || response.status >= 300) {
-                        throw new Error(response.message);
-                    }
-
-                    const result = await response.json();
                     if (result) {
                         if (result.error || !result.user) {
                             throw new Error(result.message);
@@ -130,32 +121,17 @@ export class Form {
                 }
             } else {
                 try {
-                    const response = await fetch('http://localhost:3000/api/login', {
-                        method: 'POST',
-                        headers: {
-                            'Content-type': 'application/json',
-                            'Accept': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            email: this.fields.find(item => item.name === 'email').element.value,
-                            password: this.fields.find(item => item.name === 'password').element.value,
-                            rememberMe: false
-                        })
+                    const result = await CustomHttp.request('http://localhost:3000/api/login', 'POST', {
+                        email: this.fields.find(item => item.name === 'email').element.value,
+                        password: this.fields.find(item => item.name === 'password').element.value,
+                        rememberMe: false
                     });
 
-                    if (response.status < 200 || response.status >= 300) {
-                        throw new Error(response.message);
-                    }
-
-                    const result = await response.json();
                     if (result) {
-                        if (result.error || !result.user) {
+                        if (result.error || !result.user || !result.refreshToken || !result.accessToken) {
                             throw new Error(result.message);
                         }
-
-                        localStorage.setItem("accessToken", result.tokens.accessToken)
-                        localStorage.setItem("refreshToken", result.tokens.refreshToken)
-
+                        Auth.setTokens(result.accessToken, result.refreshToken);
                         location.href = '#/home';
                     }
                 } catch (error) {
@@ -166,6 +142,35 @@ export class Form {
     }
 
     async refreshToken(){
+        try {
+            const response = await fetch('http://localhost:3000/api/refresh', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({
+                    refreshToken: localStorage.getItem('refreshToken')
+                })
+            });
 
+            if (response.status < 200 || response.status >= 300) {
+                throw new Error(response.message);
+            }
+
+            const result = await response.json();
+            if (result) {
+                if (result.error || !result.user) {
+                    throw new Error(result.message);
+                }
+
+                localStorage.setItem("accessToken", result.tokens.accessToken)
+                localStorage.setItem("refreshToken", result.tokens.refreshToken)
+
+                location.href = '#/home';
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
