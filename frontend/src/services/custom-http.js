@@ -15,7 +15,6 @@ export class CustomHttp {
 
         if (token) {
             params.headers['x-auth-token'] = token;
-            console.log(params.headers)
         }
 
         if (body) {

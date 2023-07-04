@@ -57,8 +57,8 @@
             </ul>
         </div>
     </div>
-    <div class="main-content">
-        <h1 class="">Главная</h1>
+    <div class="home-content">
+        <h1>Главная</h1>
         <div class="sort d-flex align-items-center gap-3">
             <ul class="d-flex list-unstyled gap-3 mb-0">
                 <li class="active">Сегодня</li>
@@ -74,6 +74,22 @@
                 по
                 <input type="text" placeholder="Дата">
             </div>
+        </div>
+        <div class="home-content-diagrams pt-5">
+            <div class="diagram">
+                <div class="diagram-title">Доходы</div>
+                <div class="diagram-categories mt-3">
+                    <div class="diagram-category"><div></div> <span>Red</span></div>
+                    <div class="diagram-category"><div></div> <span>Orange</span></div>
+                    <div class="diagram-category"><div></div> <span>Yellow</span></div>
+                    <div class="diagram-category"><div></div> <span>Green</span></div>
+                    <div class="diagram-category"><div></div> <span>Blue</span></div>
+                </div>
+                <div class="diagram-image">
+                    <canvas id="pieChart" width="360" height="360"></canvas>
+                </div>
+            </div>
+
         </div>
     </div>
 </section>
