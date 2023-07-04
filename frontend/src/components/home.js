@@ -3,6 +3,7 @@ import config from "../../config/config.js";
 
 export class Home {
     constructor() {
+        this.balance = null;
         const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
         tooltipTriggerList.forEach(tooltipTriggerEl => {
             new bootstrap.Tooltip(tooltipTriggerEl)
@@ -10,7 +11,9 @@ export class Home {
 
         this.linksClick();
 
-        //this.getBalance();
+        this.balance = this.getBalance();
+        console.log(this.balance)
+        document.getElementById('balance').innerText = this.balance;
     }
 
     linksClick() {
@@ -26,6 +29,8 @@ export class Home {
     async getBalance() {
         try {
             const response = await CustomHttp.request(config.host + '/balance', 'GET', );
+            document.getElementById('balance').innerText = response.balance;
+            return await response.balance;
         } catch (error) {
             console.log(error);
         }

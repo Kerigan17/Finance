@@ -97,3 +97,14 @@ li.active {
 .dropdown div:hover {
     cursor: pointer;
 }
+
+.balance {
+    color: #052C65;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.balance span {
+    color: #0D6EFD;
+}
