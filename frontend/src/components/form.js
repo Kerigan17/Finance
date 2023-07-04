@@ -71,7 +71,7 @@ export class Form {
             }
         });
 
-        if (document.cookie !== '') {
+        if (document.cookie !== '' && this.page === 'login') {
             this.autoFillForm();
         }
     }
@@ -145,7 +145,7 @@ export class Form {
                         if (result.error || !result.user || !result.tokens.refreshToken || !result.tokens.accessToken) {
                             throw new Error(result.message);
                         }
-                        Auth.setTokens(result.accessToken, result.refreshToken);
+                        Auth.setTokens(result.tokens.accessToken, result.tokens.refreshToken);
                         location.href = '#/home';
                     }
                 } catch (error) {
@@ -157,15 +157,8 @@ export class Form {
 
     async refreshToken(){
         try {
-            const response = await fetch('http://localhost:3000/api/refresh', {
-                method: 'POST',
-                headers: {
-                    'Content-type': 'application/json',
-                    'Accept': 'application/json',
-                },
-                body: JSON.stringify({
-                    refreshToken: localStorage.getItem('refreshToken')
-                })
+            const response = await CustomHttp.request(config.host + '/refresh', 'POST', {
+                refreshToken: localStorage.getItem('refreshToken')
             });
 
             if (response.status < 200 || response.status >= 300) {

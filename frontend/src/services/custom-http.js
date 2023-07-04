@@ -9,6 +9,13 @@ export class CustomHttp {
                 'Content-type': 'application/json',
                 'Accept': 'application/json',
             }
+        };
+
+        let token = localStorage.getItem(Auth.accessTokenKey);
+
+        if (token) {
+            params.headers['x-access-token'] = token;
+            console.log(params.headers)
         }
 
         if (body) {
