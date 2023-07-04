@@ -8,6 +8,7 @@ export class Form {
         this.passwordOne = null;
         this.passwordTwo = null;
         this.page = page;
+        this.rememberMe = null;
         this.fields = [
             {
                 name: 'email',
@@ -26,6 +27,8 @@ export class Form {
         ]
 
         let that = this;
+
+        this.rememberMe = document.getElementById('flexCheckDefault');
 
         this.processElement = document.getElementById('process');
         this.processElement.onclick = () => {
@@ -67,6 +70,10 @@ export class Form {
                 that.validateField.call(that, item, this);
             }
         });
+
+        if (document.cookie !== '') {
+            this.autoFillForm();
+        }
     }
 
     passwordsChecked() {
@@ -100,7 +107,6 @@ export class Form {
 
     async processForm() {
         if (this.validateForm()) {
-
             if (this.page === 'signup') {
                 try {
                     const result = await CustomHttp.request(config.host + '/signup', 'POST', {
@@ -125,8 +131,15 @@ export class Form {
                     const result = await CustomHttp.request(config.host + '/login', 'POST', {
                         email: this.fields.find(item => item.name === 'email').element.value,
                         password: this.fields.find(item => item.name === 'password').element.value,
-                        rememberMe: document.getElementById('flexCheckDefault').checked
+                        rememberMe: this.rememberMe.checked
                     });
+
+                    if (this.rememberMe.checked){
+                        document.cookie = "email" + "=" + this.fields.find(item => item.name === 'email').element.value + "; path=" + config.host + "/login";
+                        document.cookie = "password" + "=" + this.fields.find(item => item.name === 'password').element.value + "; path=" + config.host + "/login";
+                    } else {
+                        this.cookiesDelete();
+                    }
 
                     if (result) {
                         if (result.error || !result.user || !result.tokens.refreshToken || !result.tokens.accessToken) {
@@ -174,4 +187,34 @@ export class Form {
             console.log(error);
         }
     }
+
+    cookiesDelete() {
+        let cookies = document.cookie.split(";");
+        for (let i = 0; i < cookies.length; i++) {
+            let cookie = cookies[i];
+            let eqPos = cookie.indexOf("=");
+            let name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;";
+            document.cookie = name + '=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        }
+    }
+
+    getCookie(name) {
+        let matches = document.cookie.match(new RegExp(
+            "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+        ));
+        return matches ? decodeURIComponent(matches[1]) : undefined;
+    }
+
+    autoFillForm() {
+        this.fields.find(item => item.name === 'email').element.value = this.getCookie('email');
+        this.fields.find(item => item.name === 'password').element.value = this.getCookie('password');
+
+        this.rememberMe.setAttribute('checked', 'checked');
+        this.processElement.removeAttribute('disabled');
+
+        this.fields.forEach(item => item.valid = true)
+    }
+
+
 }
