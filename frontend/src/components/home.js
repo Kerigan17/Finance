@@ -14,7 +14,7 @@ export class Home {
         })
 
         this.linksClick();
-        this.balance = this.getBalance();
+        //this.balance = this.getBalance();
         console.log(this.balance)
 
         document.getElementById('balance').innerText = this.balance;
