@@ -24,7 +24,6 @@ export class Auth {
                 }
             }
         }
-        this.removeTokens();
         location.href = '#/login';
         return false;
     }
