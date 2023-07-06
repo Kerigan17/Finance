@@ -75,21 +75,20 @@
                 <input type="text" placeholder="Дата">
             </div>
         </div>
-        <div class="home-content-diagrams pt-5">
-            <div class="diagram">
-                <div class="diagram-title">Доходы</div>
-                <div class="diagram-categories mt-3">
-                    <div class="diagram-category"><div></div> <span>Red</span></div>
-                    <div class="diagram-category"><div></div> <span>Orange</span></div>
-                    <div class="diagram-category"><div></div> <span>Yellow</span></div>
-                    <div class="diagram-category"><div></div> <span>Green</span></div>
-                    <div class="diagram-category"><div></div> <span>Blue</span></div>
-                </div>
+        <div class="home-content-diagrams pt-5 d-flex gap-5">
+            <div class="diagram" style="width: 437px">
+                <div class="diagram-title mb-3">Доходы</div>
                 <div class="diagram-image">
-                    <canvas id="pieChart" width="360" height="360"></canvas>
+                    <canvas class="myChart"></canvas>
                 </div>
             </div>
-
+            <div class="line mt-5"></div>
+            <div class="diagram" style="width: 437px">
+                <div class="diagram-title mb-3">Расходы</div>
+                <div class="diagram-image">
+                    <canvas class="myChart"></canvas>
+                </div>
+            </div>
         </div>
     </div>
 </section>

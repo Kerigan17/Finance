@@ -7,7 +7,7 @@ export class Router {
             {
                 route: '#/signup',
                 title: 'Регистрация',
-                template: 'templates/signup.html',
+                template: '/templates/signup.html',
                 styles: 'styles/form.css',
                 load: () => {
                     new Form('signup');

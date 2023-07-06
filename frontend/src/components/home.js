@@ -1,12 +1,9 @@
 import {CustomHttp} from "../services/custom-http.js";
 import config from "../../config/config.js";
-import {Chart} from "chart. js";
-
-
+import { Chart, registerables } from 'chart.js';
+Chart.register(...registerables);
 export class Home {
     constructor() {
-        this.balance = null;
-
         const ctx = document.getElementById('pieChart');
 
         const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
@@ -15,8 +12,8 @@ export class Home {
         })
 
         this.linksClick();
-        //this.balance = this.getBalance();
-        console.log(this.balance)
+        this.balance = this.getBalance();
+        this.paintDiagram();
 
         document.getElementById('balance').innerText = this.balance;
     }
@@ -42,7 +39,53 @@ export class Home {
         }
     }
 
+    paintDiagram() {
+        const ctx = Array.from(document.getElementsByClassName('myChart'));
+
+        ctx.forEach(item => {
+            new Chart(item, {
+                type: 'pie',
+                data: {
+                    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple'],
+                    datasets: [{
+                        label: '# of Votes',
+                        data: [12, 19, 3, 5, 2],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            display: false
+                        },
+                        x: {
+                            display: false
+                        }
+                    },
+                    gridLines: {
+                        display: false
+                    },
+                    legend: {
+                        display: true,
+                        position: 'bottom',
+                        labels: {
+                            fontColor: 'rgb(255, 99, 132)'
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                boxWidth: 35,
+                            }
+                        }
+                    }
+                }
+            });
+        })
 
 
 
+    }
 }
