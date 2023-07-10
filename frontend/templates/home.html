@@ -1,12 +1,12 @@
 <section class="main d-flex">
-    <div class="sidebar d-flex flex-column flex-shrink-0 p-3" style="width: 218px; height: 100vh">
+    <div class="sidebar d-flex flex-column flex-shrink-0 p-3 position-fixed" style="width: 218px; height: 100vh">
         <div class="d-flex mt-4 mb-2 justify-content-center">
             <img src="/images/logo.png" alt="logo" width="98">
         </div>
         <hr>
         <ul class="nav nav-pills flex-column mb-auto mt-5">
             <li class="nav-item">
-                <a class="nav-link d-flex align-items-center" aria-current="page">
+                <a class="active-item nav-link d-flex align-items-center" aria-current="page">
                     <svg class="me-2" width="16px" height="16px" viewBox="0 0 24 24" fill="none"
                          xmlns="http://www.w3.org/2000/svg">
                         <path d="M11.336 2.253a1 1 0 0 1 1.328 0l9 8a1 1 0 0 1-1.328 1.494L20 11.45V19a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-7.55l-.336.297a1 1 0 0 1-1.328-1.494l9-8zM6 9.67V19h3v-5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v5h3V9.671l-6-5.333-6 5.333zM13 19v-4h-2v4h2z"
@@ -25,8 +25,8 @@
                     Доходы & Расходы
                 </a>
             </li>
-            <li class="nav-item mb-1">
-                <a class="nav-link d-flex align-items-center justify-content-between w-100 align-items-center" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="true">
+            <li class="nav-item">
+                <a class="nav-link d-flex align-items-center justify-content-between w-100" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="true">
                     Категории
                     <svg height="16px" width="16px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
                          xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -60,13 +60,13 @@
     <div class="home-content">
         <h1>Главная</h1>
         <div class="sort d-flex align-items-center gap-3">
-            <ul class="d-flex list-unstyled gap-3 mb-0">
-                <li class="active">Сегодня</li>
-                <li>Неделя</li>
-                <li>Месяц</li>
-                <li>Год</li>
-                <li>Все</li>
-                <li>Интервал</li>
+            <ul id="sort-list" class="d-flex list-unstyled gap-3 mb-0">
+                <li class="active">Сегодня<span>all</span></li>
+                <li>Неделя<span>week</span></li>
+                <li>Месяц<span>month</span></li>
+                <li>Год<span>year</span></li>
+                <li>Все<span>all</span></li>
+                <li>Интервал<span>interval</span></li>
             </ul>
             <div class="interval d-flex gap-3">
                 с
@@ -79,14 +79,14 @@
             <div class="diagram" style="width: 437px">
                 <div class="diagram-title mb-3">Доходы</div>
                 <div class="diagram-image">
-                    <canvas class="myChart"></canvas>
+                    <canvas id="incomeDiagram" class="myChart"></canvas>
                 </div>
             </div>
             <div class="line mt-5"></div>
             <div class="diagram" style="width: 437px">
                 <div class="diagram-title mb-3">Расходы</div>
                 <div class="diagram-image">
-                    <canvas class="myChart"></canvas>
+                    <canvas id="expensiveDiagram" class="myChart"></canvas>
                 </div>
             </div>
         </div>

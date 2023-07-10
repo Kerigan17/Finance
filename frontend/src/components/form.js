@@ -208,6 +208,4 @@ export class Form {
 
         this.fields.forEach(item => item.valid = true)
     }
-
-
 }

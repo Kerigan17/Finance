@@ -23,7 +23,8 @@ module.exports = {
             patterns: [
                 {from: "templates", to: "templates"},
                 {from: "styles", to: "styles"},
-                {from: "static/images", to: "images"}
+                {from: "static/images", to: "images"},
+                {from: "scripts", to: "scripts"}
             ],
         })
     ],

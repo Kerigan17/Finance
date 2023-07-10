@@ -39,14 +39,18 @@ export class Router {
             return item.route === window.location.hash;
         })
 
+
         if (!newRoute) {
             window.location.href = '#/login';
             return;
         }
+        if (newRoute.route === '#/login' || newRoute.route === '#/signup' || newRoute.route === '#/home') {
+            document.getElementById('content').innerHTML = await fetch(newRoute.template).then(response => response.text());
+            document.getElementById('styles').setAttribute('href', newRoute.styles);
+            document.getElementById('title').innerText = newRoute.title;
+        } else {
 
-        document.getElementById('content').innerHTML = await fetch(newRoute.template).then(response => response.text());
-        document.getElementById('styles').setAttribute('href', newRoute.styles);
-        document.getElementById('title').innerText = newRoute.title;
+        }
         newRoute.load();
     }
 }
