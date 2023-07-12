@@ -85,18 +85,21 @@ export class Router {
     }
 
     async openRoute() {
+        const sidebar = document.getElementById('sidebar');
+
         const newRoute = this.routs.find(item => {
             return item.route === window.location.hash;
         })
-
 
         if (!newRoute) {
             window.location.href = '#/login';
             return;
         }
 
-        if (newRoute.route === '#/home') {
-            document.getElementById('sidebar').innerHTML = await fetch('/templates/sidebar.html').then(response => response.text());
+        if (newRoute.route === '#/login' || newRoute.route === '#/login') {
+            sidebar.style.display = 'none';
+        } else {
+            sidebar.style.display = 'flex';
         }
 
         document.getElementById('content').innerHTML = await fetch(newRoute.template).then(response => response.text());

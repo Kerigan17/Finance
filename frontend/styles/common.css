@@ -93,6 +93,9 @@ h1 {
 
 #content {
     padding: 100px 60px;
+}
+
+.content-block {
     margin-left: 218px;
 }
 
@@ -201,4 +204,8 @@ li.active {
     border-bottom: 1px solid #6C757D;
     width: 39px;
     outline: none;
+}
+
+#sidebar {
+    display: none;
 }
