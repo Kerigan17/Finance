@@ -32,7 +32,7 @@
       <tr>
         <td>1</td> <td>доход</td> <td>зарплата</td> <td>500$</td> <td>11.09.2022</td> <td>коммент</td>
         <td class="svg-images">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15" fill="none">
+          <svg class="bucket" xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15" fill="none">
             <path d="M4.5 5.5C4.77614 5.5 5 5.72386 5 6V12C5 12.2761 4.77614 12.5 4.5 12.5C4.22386 12.5 4 12.2761 4 12V6C4 5.72386 4.22386 5.5 4.5 5.5Z" fill="black"/>
             <path d="M7 5.5C7.27614 5.5 7.5 5.72386 7.5 6V12C7.5 12.2761 7.27614 12.5 7 12.5C6.72386 12.5 6.5 12.2761 6.5 12V6C6.5 5.72386 6.72386 5.5 7 5.5Z" fill="black"/>
             <path d="M10 6C10 5.72386 9.77614 5.5 9.5 5.5C9.22386 5.5 9 5.72386 9 6V12C9 12.2761 9.22386 12.5 9.5 12.5C9.77614 12.5 10 12.2761 10 12V6Z" fill="black"/>
@@ -46,7 +46,7 @@
       <tr>
         <td>2</td> <td>расход</td> <td>жильё</td> <td>2 500$</td> <td>12.09.2022</td> <td>коммент</td>
         <td class="svg-images">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15" fill="none">
+          <svg class="bucket" xmlns="http://www.w3.org/2000/svg" width="14" height="15" viewBox="0 0 14 15" fill="none">
             <path d="M4.5 5.5C4.77614 5.5 5 5.72386 5 6V12C5 12.2761 4.77614 12.5 4.5 12.5C4.22386 12.5 4 12.2761 4 12V6C4 5.72386 4.22386 5.5 4.5 5.5Z" fill="black"/>
             <path d="M7 5.5C7.27614 5.5 7.5 5.72386 7.5 6V12C7.5 12.2761 7.27614 12.5 7 12.5C6.72386 12.5 6.5 12.2761 6.5 12V6C6.5 5.72386 6.72386 5.5 7 5.5Z" fill="black"/>
             <path d="M10 6C10 5.72386 9.77614 5.5 9.5 5.5C9.22386 5.5 9 5.72386 9 6V12C9 12.2761 9.22386 12.5 9.5 12.5C9.77614 12.5 10 12.2761 10 12V6Z" fill="black"/>
@@ -59,6 +59,18 @@
       </tr>
       </tbody>
     </table>
+  </div>
+
+  <div id="popup" class="popup align-items-center justify-content-center position-absolute">
+    <div class="popup-block">
+      <div class="popup-title">
+        Вы действительно хотите удалить операцию?
+      </div>
+      <div class="block-actions">
+        <button class="create">Да, удалить</button>
+        <button class="cancel">Не удалять</button>
+      </div>
+    </div>
   </div>
 </section>
 
