@@ -1,5 +1,6 @@
 import {Form} from "./components/form.js";
 import {Home} from "./components/home.js";
+import {IncomeAndExpenses} from "./components/incomeAndExpenses.js";
 
 export class Router {
     constructor() {
@@ -31,6 +32,15 @@ export class Router {
                     new Home();
                 }
             },
+            {
+                route: '#/incAndExp',
+                title: 'Доходы и расходы',
+                template: '/templates/incomeAndExpenses.html',
+                styles: 'styles/incomeAndExpenses.css',
+                load: () => {
+                    new IncomeAndExpenses();
+                }
+            },
         ]
     }
 
@@ -44,13 +54,16 @@ export class Router {
             window.location.href = '#/login';
             return;
         }
-        if (newRoute.route === '#/login' || newRoute.route === '#/signup' || newRoute.route === '#/home') {
-            document.getElementById('content').innerHTML = await fetch(newRoute.template).then(response => response.text());
-            document.getElementById('styles').setAttribute('href', newRoute.styles);
-            document.getElementById('title').innerText = newRoute.title;
-        } else {
 
+        if (newRoute.route === '#/home') {
+            console.log(1)
+            document.getElementById('sidebar').innerHTML = await fetch('/templates/sidebar.html').then(response => response.text());
         }
+
+        document.getElementById('content').innerHTML = await fetch(newRoute.template).then(response => response.text());
+        document.getElementById('styles').setAttribute('href', newRoute.styles);
+        document.getElementById('title').innerText = newRoute.title;
+
         newRoute.load();
     }
 }

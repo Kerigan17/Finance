@@ -90,3 +90,115 @@ h1 {
     font-weight: 500;
     margin-bottom: 60px;
 }
+
+#content {
+    padding: 100px 60px;
+    margin-left: 218px;
+}
+
+.sidebar {
+    border-right: 1px solid #D9D9D9;
+}
+
+.nav li, .nav-item a {
+    color: #052C65;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.nav-item path {
+    fill: #052C65;
+}
+
+.nav-item a {
+    padding: 12px 16px;
+    cursor: pointer;
+}
+
+#dashboard-collapse a {
+    text-decoration: none;
+    padding: 0;
+}
+
+#dashboard-collapse li {
+    padding: 12px 16px;
+}
+
+.nav-link.active-item {
+    background: #0D6EFD;
+    color: white;
+}
+
+.nav-item:has(.active-item){
+    border: 1px solid #0D6EFD;
+    border-radius: 7px;
+}
+
+.nav-link.active-item {
+    border: 1px solid #0D6EFD;
+}
+
+.nav-link.active-item > a {
+    color: white;
+}
+
+.nav-link.active-item path {
+    fill: white;
+}
+
+.dropdown div:hover {
+    cursor: pointer;
+}
+
+.balance {
+    color: #052C65;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.balance span {
+    color: #0D6EFD;
+}
+
+.sort li {
+    color: #6C757D;
+    text-align: center;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    letter-spacing: 0.457px;
+    border: 1px solid #6C757D;
+    padding: 9px 12px;
+    width: 100px;
+    height: 37px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    background-color: white;
+}
+
+.sort span {
+    display: none;
+}
+
+.sort li:hover {
+    cursor: pointer;
+}
+.sort li:hover:not(.active) {
+    background-color: rgba(108, 117, 125, 0.1);
+}
+
+li.active {
+    background-color: #6C757D;
+    color: white;
+}
+
+.interval input {
+    border: none;
+    border-bottom: 1px solid #6C757D;
+    width: 39px;
+    outline: none;
+}
