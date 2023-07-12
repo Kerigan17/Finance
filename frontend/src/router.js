@@ -2,6 +2,7 @@ import {Form} from "./components/form.js";
 import {Home} from "./components/home.js";
 import {IncomeAndExpenses} from "./components/incomeAndExpenses.js";
 import {Income} from "./components/income.js";
+import {Expenses} from "./components/expenses.js";
 
 export class Router {
     constructor() {
@@ -46,11 +47,20 @@ export class Router {
                 route: '#/income',
                 title: 'Доходы',
                 template: '/templates/income.html',
-                styles: 'styles/income.css',
+                styles: 'styles/income-expenses.css',
                 load: () => {
                     new Income();
                 }
             },
+            {
+                route: '#/expenses',
+                title: 'Расходы',
+                template: '/templates/expenses.html',
+                styles: 'styles/income-expenses.css',
+                load: () => {
+                    new Expenses();
+                }
+            }
         ]
     }
 
