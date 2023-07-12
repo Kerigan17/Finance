@@ -13,6 +13,7 @@
     border-radius: 5px;
     border: 1px solid #CED4DA;
     gap: 10px;
+    text-decoration: none;
 }
 
 .block-title {
@@ -28,7 +29,7 @@
     gap: 10px;
 }
 
-.block-actions button {
+.block-actions button, .block-actions a {
     padding: 12px 16px;
     border: none;
     color: white;
@@ -39,18 +40,66 @@
     box-sizing: border-box;
     line-height: 1;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    text-decoration: none;
+    display: inline-block;
 }
 
-.block-actions button:active {
+.block-actions a:active, .block-actions button:active {
     box-shadow:inset 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.table-info table {
+    text-align: center;
+}
+
+.table-info table {
+    max-width: 1100px;
+}
+
+.table-info thead {
+    color: #052C65;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 1.333px;
+}
+
+.table-info tr {
+    border-top: 1px solid #DEE2E6;
+}
+
+.table-info tr:last-child {
+    border-bottom: 1px solid #DEE2E6;
+}
+
+.table-info td {
+    padding: 15px;
+}
+
+.table-info .svg-images {
+    display: flex;
+    gap: 10.5px;
+}
+
+.table-info .svg-images svg:hover path {
+    fill: rgba(0, 0, 0, 0.5);
+}
+
+.table-info .svg-images svg:hover {
+    cursor: pointer;
 }
 
 .edit {
     background: #0D6EFD;
 }
 
-.delete {
+.delete, .cancel {
     background: #DC3545;
+}
+
+.create {
+    background: #198754;
 }
 
 .create-block {
@@ -68,4 +117,12 @@
     cursor: pointer;
     color: black;
     border-color: black;
+}
+
+.create-input {
+    padding: 7px 16px;
+    border: 1px solid #CED4DA;
+    outline: none;
+    border-radius: 4px;
+    color: #6C757D;
 }

@@ -3,6 +3,8 @@ import {Home} from "./components/home.js";
 import {IncomeAndExpenses} from "./components/incomeAndExpenses.js";
 import {Income} from "./components/income.js";
 import {Expenses} from "./components/expenses.js";
+import {CreateIncome} from "./components/create-income.js";
+import {CreateExpenses} from "./components/create-expenses.js";
 
 export class Router {
     constructor() {
@@ -38,7 +40,7 @@ export class Router {
                 route: '#/incAndExp',
                 title: 'Доходы и расходы',
                 template: '/templates/incomeAndExpenses.html',
-                styles: 'styles/incomeAndExpenses.css',
+                styles: 'styles/income-expenses.css',
                 load: () => {
                     new IncomeAndExpenses();
                 }
@@ -60,6 +62,24 @@ export class Router {
                 load: () => {
                     new Expenses();
                 }
+            },
+            {
+                route: '#/create-income',
+                title: 'Создание категории доходов',
+                template: '/templates/create-income.html',
+                styles: 'styles/income-expenses.css',
+                load: () => {
+                    new CreateIncome();
+                }
+            },
+            {
+                route: '#/create-expenses',
+                title: 'Создание категории расходов',
+                template: '/templates/create-expenses.html',
+                styles: 'styles/income-expenses.css',
+                load: () => {
+                    new CreateExpenses();
+                }
             }
         ]
     }
@@ -76,7 +96,6 @@ export class Router {
         }
 
         if (newRoute.route === '#/home') {
-            console.log(1)
             document.getElementById('sidebar').innerHTML = await fetch('/templates/sidebar.html').then(response => response.text());
         }
 
