@@ -82,11 +82,11 @@
     gap: 10.5px;
 }
 
-.table-info .svg-images svg:hover path {
+.table-info .svg-images img:hover color {
     fill: rgba(0, 0, 0, 0.5);
 }
 
-.table-info .svg-images svg:hover {
+.table-info .svg-images img:hover {
     cursor: pointer;
 }
 
