@@ -15,6 +15,18 @@ export class Home {
         this.paintDiagram();
 
         //document.getElementById('balance').innerText = this.balance;
+
+        this.getOperations();
+    }
+
+    async getOperations() {
+        try {
+            const response = await CustomHttp.request(config.host + '/operations' + '?period=all', 'GET', );
+            console.log(response)
+            return await response.balance;
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     async getBalance() {
