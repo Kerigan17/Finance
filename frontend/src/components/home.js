@@ -11,22 +11,11 @@ export class Home {
             new bootstrap.Tooltip(tooltipTriggerEl)
         })
 
-        //this.linksClick();
         //this.balance = this.getBalance();
         this.paintDiagram();
 
         //document.getElementById('balance').innerText = this.balance;
     }
-
-    // linksClick() {
-    //     const links = Array.from(document.getElementsByClassName('nav-link'));
-    //     links.forEach(item => {
-    //         item.onclick = () => {
-    //             links.forEach(item => item.classList.remove('active-item'))
-    //             item.classList.add('active-item')
-    //         }
-    //     })
-    // }
 
     async getBalance() {
         try {

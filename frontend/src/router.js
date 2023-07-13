@@ -5,6 +5,7 @@ import {Income} from "./components/income.js";
 import {Expenses} from "./components/expenses.js";
 import {CreateIncome} from "./components/create-income.js";
 import {CreateExpenses} from "./components/create-expenses.js";
+import {CreateIncomeExpenses} from "./components/createIncomeExpenses.js";
 
 export class Router {
     constructor() {
@@ -80,6 +81,15 @@ export class Router {
                 load: () => {
                     new CreateExpenses();
                 }
+            },
+            {
+                route: '#/create-income-expenses',
+                title: 'Создание дохода/расхода',
+                template: '/templates/create-income-expenses.html',
+                styles: 'styles/income-expenses.css',
+                load: () => {
+                    new CreateIncomeExpenses();
+                }
             }
         ]
     }
@@ -96,7 +106,7 @@ export class Router {
             return;
         }
 
-        if (newRoute.route === '#/login' || newRoute.route === '#/login') {
+        if (newRoute.route === '#/login' || newRoute.route === '#/signup') {
             sidebar.style.display = 'none';
         } else {
             sidebar.style.display = 'flex';

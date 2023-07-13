@@ -120,11 +120,16 @@
 }
 
 .create-input {
+    appearance: none;
     padding: 7px 16px;
     border: 1px solid #CED4DA;
     outline: none;
     border-radius: 4px;
-    color: #6C757D;
+    color: #000;
+}
+
+select.create-input {
+    cursor: pointer;
 }
 
 .popup {

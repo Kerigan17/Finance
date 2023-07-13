@@ -1,0 +1,24 @@
+<section class="content-block">
+  <h1>Создание доходов/расходов</h1>
+  <form class="d-flex flex-column w-25 gap-4">
+    <div class="block-inputs d-flex flex-column gap-2">
+      <select class="create-input" name="typeOperation" id="typeOperation">
+        <option selected value="доход">Доход</option>
+        <option value="расход">Расход</option>
+      </select>
+      <select class="create-input" name="typeCategory" id="typeCategory">
+        <option selected value="категория 1">категория 1</option>
+        <option value="категория 2">категория 2</option>
+        <option value="категория 3">категория 3</option>
+        <option value="категория 4">категория 4</option>
+      </select>
+      <input id="sumOperation" class="create-input" type="number" placeholder="Сумма..." checked>
+      <input id="dateOperation" class="create-input" type="date" placeholder="Дата..." checked>
+      <input id="commentOperation" class="create-input" type="text" placeholder="Комментарий...">
+    </div>
+    <div class="block-actions">
+      <button id="createOperation" class="create" type="button">Создать</button>
+      <a href="" onclick="javascript:history.back(); return false;" class="cancel">Отменить</a>
+    </div>
+  </form>
+</section>
