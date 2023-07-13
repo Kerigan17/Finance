@@ -11,11 +11,7 @@ export class Home {
             new bootstrap.Tooltip(tooltipTriggerEl)
         })
 
-        //this.balance = this.getBalance();
         this.paintDiagram();
-
-        //document.getElementById('balance').innerText = this.balance;
-
         this.getOperations();
     }
 
@@ -23,7 +19,6 @@ export class Home {
         try {
             const response = await CustomHttp.request(config.host + '/operations' + '?period=all', 'GET', );
             console.log(response)
-            return await response.balance;
         } catch (error) {
             console.log(error);
         }
