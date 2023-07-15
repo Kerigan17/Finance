@@ -1,5 +1,5 @@
-import {CustomHttp} from "../services/custom-http";
-import config from "../../config/config";
+import {CustomHttp} from "../services/custom-http.js";
+import config from "../../config/config.js";
 
 export class IncomeAndExpenses {
     constructor() {
@@ -17,7 +17,6 @@ export class IncomeAndExpenses {
 
     async getInfo() {
         this.response = null;
-        this.items = ['','','','',''];
 
         try {
             this.response = await CustomHttp.request(config.host + '/operations' + '?period=all', 'GET',);
@@ -37,7 +36,7 @@ export class IncomeAndExpenses {
 
             //доход - расход
             firstTdElement = document.createElement('td');
-            if (this.response[j].type) {
+            if (this.response[j].type === 'income') {
                 firstTdElement.innerText = 'доход';
                 firstTdElement.style.color = 'green';
             } else {

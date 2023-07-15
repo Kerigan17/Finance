@@ -1,19 +1,67 @@
-import {CustomHttp} from "../services/custom-http";
-import config from "../../config/config";
+import {CustomHttp} from "../services/custom-http.js";
+import config from "../../config/config.js";
 
 export class CreateIncomeExpenses {
     constructor() {
-        this.typeOperation = null;
-        this.typeCategory = null;
-        this.sumOperation = null;
+        this.typeOperation = 'income';
+        this.amountOperation = null;
         this.dateOperation = null;
         this.commentOperation = null;
-        this.categoryId = null;
-        this.createOperation = document.getElementById('createOperation');
+        this.categoryIdOperation = null;
 
-        this.createOperation.onclick = () => {
+        this.categories = null;
+
+        this.btnCreateOperation = document.getElementById('btnCreateOperation');
+        this.selectCategories = document.getElementById('selectCategories');
+        this.typeOperationElement = document.getElementById('typeOperationElement');
+
+        //получаю категории
+        this.getCategories(this.typeOperation);
+
+        //задаю Id категории
+        this.categoryIdOperation = this.selectCategories.value;
+
+        //изменение типа операции
+        this.typeOperationElement.onchange = () => {
+            this.typeOperation = this.typeOperationElement.value;
+            this.getCategories(this.typeOperation);
+            this.setCategories();
+            console.log(this.categories);
+        }
+
+        //изменение категории
+        this.selectCategories.onchange = () => {
+            this.categoryIdOperation = this.selectCategories.value;
+            console.log(this.categoryIdOperation);
+        }
+
+        this.btnCreateOperation.onclick = () => {
             this.createNewCategory();
         }
+    }
+
+    async getCategories(operation) {
+        try {
+            const response = await CustomHttp.request(config.host + '/categories/' + operation, 'GET', );
+            this.categories = response;
+        } catch (error) {
+            console.log(error);
+        }
+
+        //устанавливаю категории
+        this.setCategories();
+    }
+
+    setCategories() {
+        this.selectCategories.innerHTML = '';
+
+        this.categories.forEach(item => {
+            let operationItem = document.createElement('option');
+            operationItem.setAttribute('value', item.id);
+            operationItem.innerText = item.title;
+
+            this.selectCategories.appendChild(operationItem);
+        })
     }
 
     async createNewCategory() {
@@ -21,13 +69,12 @@ export class CreateIncomeExpenses {
 
         try {
             const result = await CustomHttp.request(config.host + '/operations', 'POST', {
-                type: this.typeOperation.value,
-                amount: this.sumOperation.value,
+                type: this.typeOperation,
+                amount: this.amountOperation.value,
                 date: this.dateOperation.value,
                 comment: this.commentOperation.value,
-                category_id: this.categoryId.value,
+                category_id: this.categoryIdOperation,
             });
-            console.log(result.status)
             location.href = '#/create-income-expenses';
         } catch (error) {
             console.log(error);
@@ -35,16 +82,9 @@ export class CreateIncomeExpenses {
     }
 
     getValue() {
-        this.typeOperation = document.getElementById('typeOperation');
-        this.typeCategory = document.getElementById('typeCategory');
-        this.sumOperation = document.getElementById('sumOperation');
+        this.amountOperation = document.getElementById('amountOperation');
         this.dateOperation = document.getElementById('dateOperation');
         this.commentOperation = document.getElementById('commentOperation');
-
-        if (this.typeOperation === 'income') {
-            this.categoryId = 2;
-        } else {
-            this.categoryId = 1;
-        }
+        this.categoryIdOperation = document.getElementById('categoryIdOperation');
     }
 }

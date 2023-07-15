@@ -3,10 +3,17 @@ import config from "../../config/config.js";
 
 export class Income {
     constructor() {
-        this.deleteButtons = null;
         this.popup = document.getElementById('popup');
+        this.yesDelete = document.getElementById('yesDelete');
+        this.categoryId = null;
+        let that = this;
 
         this.getCategories();
+
+        this.yesDelete.onclick = () => {
+            this.popup.style.display = 'none';
+            this.deleteCategory(this.categoryId);
+        }
     }
 
     async getCategories() {
@@ -38,6 +45,11 @@ export class Income {
             butDelete.classList.add('delete');
             butDelete.innerText = 'Удалить';
 
+            butDelete.onclick = () => {
+                this.popup.style.display = 'flex';
+                this.categoryId = item.id;
+            }
+
             blockActions.appendChild(butEdit);
             blockActions.appendChild(butDelete);
 
@@ -54,10 +66,15 @@ export class Income {
         blockAdd.classList.add('create-block');
 
         blockCategories.appendChild(blockAdd);
+    }
 
-        this.deleteButtons = Array.from(document.getElementsByClassName('delete'));
-        this.deleteButtons.forEach(item => item.onclick = () => {
-            this.popup.style.display = 'flex';
-        });
+    async deleteCategory(id) {
+        try {
+            console.log(id)
+            this.result = await CustomHttp.request(config.host + '/categories/income/' + id, 'DELETE', );
+            location.href = '#/income';
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
