@@ -47,12 +47,4 @@ export class CreateIncomeExpenses {
             this.categoryId = 1;
         }
     }
-
-    clearInputs() {
-        this.typeOperation.value = null;
-        this.typeCategory.value = null;
-        this.sumOperation.value = null;
-        this.dateOperation.value = null;
-        this.commentOperation.value = null;
-    }
 }
