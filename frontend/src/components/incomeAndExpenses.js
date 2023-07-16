@@ -11,7 +11,6 @@ export class IncomeAndExpenses {
             popup.style.display = 'flex';
         })
 
-        console.log(localStorage.accessToken);
         this.getInfo();
     }
 
@@ -47,7 +46,7 @@ export class IncomeAndExpenses {
 
             //категория
             firstTdElement = document.createElement('td');
-            firstTdElement.innerText = 'категория';
+            firstTdElement.innerText = this.response[j].category;
             trElement.appendChild(firstTdElement);
 
             //сумма
@@ -69,11 +68,15 @@ export class IncomeAndExpenses {
             //удаление и редактирование
             firstTdElement = document.createElement('td');
             firstTdElement.classList.add('svg-images');
+
             let imgElement = document.createElement('img');
             imgElement.src = '/images/bucket.svg';
+            imgElement.onclick = () => {this.deleteOperation(this.response[j].id);}
             firstTdElement.appendChild(imgElement);
+
             imgElement = document.createElement('img');
             imgElement.src = '../../images/pen.svg';
+            imgElement.onclick = () => {this.editOperation(this.response[j].id);}
             firstTdElement.appendChild(imgElement);
 
             trElement.appendChild(firstTdElement);
@@ -87,5 +90,19 @@ export class IncomeAndExpenses {
 
             this.tableBody.appendChild(trElement);
         }
+    }
+
+    async deleteOperation(id) {
+        console.log(id);
+        try {
+            this.result = await CustomHttp.request(config.host + '/operations/' + id, 'DELETE', );
+            location.href = '#/incAndExp';
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    editOperation(operation) {
+        console.log(operation)
     }
 }

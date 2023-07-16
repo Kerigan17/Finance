@@ -1,11 +1,10 @@
 import {Form} from "./components/form.js";
 import {Home} from "./components/home.js";
 import {IncomeAndExpenses} from "./components/incomeAndExpenses.js";
-import {Income} from "./components/income.js";
-import {Expenses} from "./components/expenses.js";
-import {CreateIncome} from "./components/create-income.js";
-import {CreateExpenses} from "./components/create-expenses.js";
+import {WorkWithCategory} from "./components/work-with-category.js";
 import {CreateIncomeExpenses} from "./components/createIncomeExpenses.js";
+import {Category} from "./components/category.js";
+import {EditCategory} from "./components/edit-category";
 
 export class Router {
     constructor() {
@@ -52,16 +51,16 @@ export class Router {
                 template: '/templates/income.html',
                 styles: 'styles/income-expenses.css',
                 load: () => {
-                    new Income();
+                    new Category('income');
                 }
             },
             {
-                route: '#/expenses',
+                route: '#/expense',
                 title: 'Расходы',
                 template: '/templates/expenses.html',
                 styles: 'styles/income-expenses.css',
                 load: () => {
-                    new Expenses();
+                    new Category('expense');
                 }
             },
             {
@@ -70,7 +69,7 @@ export class Router {
                 template: '/templates/create-income.html',
                 styles: 'styles/income-expenses.css',
                 load: () => {
-                    new CreateIncome();
+                    new WorkWithCategory('income');
                 }
             },
             {
@@ -79,7 +78,7 @@ export class Router {
                 template: '/templates/create-expenses.html',
                 styles: 'styles/income-expenses.css',
                 load: () => {
-                    new CreateExpenses();
+                    new WorkWithCategory('expense');
                 }
             },
             {
@@ -89,6 +88,24 @@ export class Router {
                 styles: 'styles/income-expenses.css',
                 load: () => {
                     new CreateIncomeExpenses();
+                }
+            },
+            {
+                route: '#/edit-income',
+                title: 'Редактирование категории доходов',
+                template: '/templates/edit-income.html',
+                styles: 'styles/income-expenses.css',
+                load: () => {
+                    new EditCategory("income");
+                }
+            },
+            {
+                route: '#/edit-expense',
+                title: 'Редактирование категории доходов',
+                template: '/templates/edit-expense.html',
+                styles: 'styles/income-expenses.css',
+                load: () => {
+                    new EditCategory('expense');
                 }
             }
         ]

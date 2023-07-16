@@ -8,7 +8,6 @@ export class CreateIncomeExpenses {
         this.dateOperation = null;
         this.commentOperation = null;
         this.categoryIdOperation = null;
-
         this.categories = null;
 
         this.btnCreateOperation = document.getElementById('btnCreateOperation');
@@ -19,7 +18,7 @@ export class CreateIncomeExpenses {
         this.getCategories(this.typeOperation);
 
         //задаю Id категории
-        this.categoryIdOperation = this.selectCategories.value;
+        this.categoryIdOperation = Number(this.selectCategories.value);
 
         //изменение типа операции
         this.typeOperationElement.onchange = () => {
@@ -31,8 +30,10 @@ export class CreateIncomeExpenses {
 
         //изменение категории
         this.selectCategories.onchange = () => {
-            this.categoryIdOperation = this.selectCategories.value;
-            console.log(this.categoryIdOperation);
+            this.categoryIdOperation = Number(this.selectCategories.value);
+
+            console.log(this.categoryIdOperation)
+            console.log(typeof(this.categoryIdOperation))
         }
 
         this.btnCreateOperation.onclick = () => {
@@ -54,9 +55,10 @@ export class CreateIncomeExpenses {
 
     setCategories() {
         this.selectCategories.innerHTML = '';
+        let operationItem = null;
 
         this.categories.forEach(item => {
-            let operationItem = document.createElement('option');
+            operationItem = document.createElement('option');
             operationItem.setAttribute('value', item.id);
             operationItem.innerText = item.title;
 
@@ -67,6 +69,8 @@ export class CreateIncomeExpenses {
     async createNewCategory() {
         this.getValue();
 
+        console.log(typeof(this.categoryIdOperation))
+
         try {
             const result = await CustomHttp.request(config.host + '/operations', 'POST', {
                 type: this.typeOperation,
@@ -75,7 +79,8 @@ export class CreateIncomeExpenses {
                 comment: this.commentOperation.value,
                 category_id: this.categoryIdOperation,
             });
-            location.href = '#/create-income-expenses';
+            console.log(result)
+            location.href = '#/incAndExp';
         } catch (error) {
             console.log(error);
         }
@@ -85,6 +90,5 @@ export class CreateIncomeExpenses {
         this.amountOperation = document.getElementById('amountOperation');
         this.dateOperation = document.getElementById('dateOperation');
         this.commentOperation = document.getElementById('commentOperation');
-        this.categoryIdOperation = document.getElementById('categoryIdOperation');
     }
 }
