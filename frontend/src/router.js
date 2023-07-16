@@ -66,23 +66,23 @@ export class Router {
             {
                 route: '#/create-income',
                 title: 'Создание категории доходов',
-                template: '/templates/create-income.html',
+                template: '/templates/create-edit-category.html',
                 styles: 'styles/income-expenses.css',
                 load: () => {
                     new WorkWithCategory('income');
                 }
             },
             {
-                route: '#/create-expenses',
+                route: '#/create-expense',
                 title: 'Создание категории расходов',
-                template: '/templates/create-expenses.html',
+                template: '/templates/create-edit-category.html',
                 styles: 'styles/income-expenses.css',
                 load: () => {
                     new WorkWithCategory('expense');
                 }
             },
             {
-                route: '#/create-income-expenses',
+                route: '#/create-income-expense',
                 title: 'Создание дохода/расхода',
                 template: '/templates/create-income-expenses.html',
                 styles: 'styles/income-expenses.css',
@@ -93,7 +93,7 @@ export class Router {
             {
                 route: '#/edit-income',
                 title: 'Редактирование категории доходов',
-                template: '/templates/edit-income.html',
+                template: '/templates/create-edit-category.html',
                 styles: 'styles/income-expenses.css',
                 load: () => {
                     new EditCategory("income");
@@ -102,10 +102,19 @@ export class Router {
             {
                 route: '#/edit-expense',
                 title: 'Редактирование категории доходов',
-                template: '/templates/edit-expense.html',
+                template: '/templates/create-edit-category.html',
                 styles: 'styles/income-expenses.css',
                 load: () => {
                     new EditCategory('expense');
+                }
+            },
+            {
+                route: '#/edit-operation',
+                title: 'Редактирование дохода/расхода',
+                template: '/templates/create-income-expenses.html',
+                styles: 'styles/income-expenses.css',
+                load: () => {
+                    new CreateIncomeExpenses('edit')
                 }
             }
         ]
@@ -133,6 +142,11 @@ export class Router {
         document.getElementById('styles').setAttribute('href', newRoute.styles);
         document.getElementById('title').innerText = newRoute.title;
 
+        let title = document.getElementById('body-title');
+
+        if (title) {
+            title.innerText = newRoute.title;
+        }
         newRoute.load();
     }
 }

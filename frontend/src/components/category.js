@@ -1,6 +1,5 @@
 import {CustomHttp} from "../services/custom-http.js";
 import config from "../../config/config.js";
-import {EditCategory} from "./edit-category";
 
 export class Category {
     constructor(page) {
@@ -83,7 +82,11 @@ export class Category {
             })
 
             let blockAdd = document.createElement('a');
-            blockAdd.setAttribute('href', '#/create-income');
+            if (this.page === 'income') {
+                blockAdd.setAttribute('href', '#/create-income');
+            } else {
+                blockAdd.setAttribute('href', '#/create-expense');
+            }
             blockAdd.innerText = '+';
             blockAdd.classList.add('block');
             blockAdd.classList.add('create-block');

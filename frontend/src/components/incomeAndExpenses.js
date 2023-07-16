@@ -3,23 +3,34 @@ import config from "../../config/config.js";
 
 export class IncomeAndExpenses {
     constructor() {
-        const popup = document.getElementById('popup');
-        const buckets = Array.from(document.getElementsByClassName('bucket'));
+        this.popup = document.getElementById('popup');
         this.tableBody = document.getElementById('table-body');
+        this.yesDelete = document.getElementById('yesDelete');
+        this.noDelete = document.getElementById('noDelete');
+        this.operationId = null;
+        this.period = ['now', 'week', 'month', 'year', 'all', 'interval'];
+        this.sortButtons = Array.from(document.getElementById('sort-list').children);
 
-        buckets.forEach(item => item.onclick = () => {
-            popup.style.display = 'flex';
-        })
+        for (let i = 0; i < this.sortButtons.length; i++) {
+            this.sortButtons[i].onclick = () => {
+                this.sortButtons.forEach(item => item.classList.remove('active'))
+                this.sortButtons[i].classList.add('active');
+                console.log(this.period[i])
+            }
+        }
+
+        this.yesDelete.onclick = () => {this.deleteOperation(this.operationId)};
+        this.noDelete.onclick = () => {this.popup.style.display = 'none'};
 
         this.getInfo();
     }
 
     async getInfo() {
         this.response = null;
+        let that = this;
 
         try {
             this.response = await CustomHttp.request(config.host + '/operations' + '?period=all', 'GET',);
-            console.log(this.response)
         } catch (error) {
             console.log(error);
         }
@@ -71,38 +82,31 @@ export class IncomeAndExpenses {
 
             let imgElement = document.createElement('img');
             imgElement.src = '/images/bucket.svg';
-            imgElement.onclick = () => {this.deleteOperation(this.response[j].id);}
+            imgElement.onclick = () => {
+                this.popup.style.display = 'flex';
+                that.operationId = this.response[j].id;
+            }
             firstTdElement.appendChild(imgElement);
 
             imgElement = document.createElement('img');
             imgElement.src = '../../images/pen.svg';
-            imgElement.onclick = () => {this.editOperation(this.response[j].id);}
+            imgElement.onclick = () => {
+                localStorage.removeItem('id');
+                localStorage.setItem('id', this.response[j].id);
+                location.href = '#/edit-operation';
+            }
             firstTdElement.appendChild(imgElement);
-
             trElement.appendChild(firstTdElement);
-
-            // for (let i = 0; i < 5; i++) {
-            //     console.log(this.response[i])
-            //     let tdElement = document.createElement('td');
-            //     tdElement.innerText = 1;
-            //     trElement.appendChild(tdElement);
-            // }
-
             this.tableBody.appendChild(trElement);
         }
     }
 
     async deleteOperation(id) {
-        console.log(id);
         try {
             this.result = await CustomHttp.request(config.host + '/operations/' + id, 'DELETE', );
             location.href = '#/incAndExp';
         } catch (error) {
             console.log(error);
         }
-    }
-
-    editOperation(operation) {
-        console.log(operation)
     }
 }

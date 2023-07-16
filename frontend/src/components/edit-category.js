@@ -4,11 +4,13 @@ import config from "../../config/config";
 export class EditCategory {
     constructor(page) {
         this.id = localStorage.getItem('id');
-        this.editBut = document.getElementById('edit-item');
+        this.editBut = document.getElementById('create-item');
         this.editInput = document.getElementById('create-input');
         this.newValue = null;
         this.page = page;
         this.adress = null;
+
+        this.editBut.innerText = 'Сохранить'
 
         if (page === 'income') {
             this.adress = 'income';
