@@ -7,9 +7,9 @@ export class IncomeAndExpenses {
         this.tableBody = document.getElementById('table-body');
         this.yesDelete = document.getElementById('yesDelete');
         this.noDelete = document.getElementById('noDelete');
-        this.operationId = 'all';
+        this.operationId = null;
         this.periods = ['now', 'week', 'month', 'year', 'all', 'interval'];
-        this.period = null;
+        this.period = 'all';
         this.sortButtons = Array.from(document.getElementById('sort-list').children);
 
         for (let i = 0; i < this.sortButtons.length; i++) {

@@ -5,6 +5,9 @@ import {WorkWithCategory} from "./components/work-with-category.js";
 import {CreateIncomeExpenses} from "./components/createIncomeExpenses.js";
 import {Category} from "./components/category.js";
 import {EditCategory} from "./components/edit-category";
+import {CustomHttp} from "./services/custom-http";
+import config from "../config/config";
+import {Links} from "./components/links";
 
 export class Router {
     constructor() {
@@ -136,6 +139,8 @@ export class Router {
             sidebar.style.display = 'none';
         } else {
             sidebar.style.display = 'flex';
+            this.getBalance();
+            new Links();
         }
 
         document.getElementById('content').innerHTML = await fetch(newRoute.template).then(response => response.text());
@@ -148,5 +153,14 @@ export class Router {
             title.innerText = newRoute.title;
         }
         newRoute.load();
+    }
+
+    async getBalance() {
+        try {
+            const response = await CustomHttp.request(config.host + '/balance', 'GET',);
+            document.getElementById('balance').innerText = response.balance;
+        } catch (error) {
+            console.log(error);
+        }
     }
 }

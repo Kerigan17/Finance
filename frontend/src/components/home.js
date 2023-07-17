@@ -27,7 +27,6 @@ export class Home {
             }
         }
 
-        this.getBalance();
         this.getOperations();
     }
 
@@ -35,15 +34,6 @@ export class Home {
         try {
             const result = await CustomHttp.request(config.host + '/operations' + '?period='  + this.period, 'GET',);
             this.paintingDiagrams(result);
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    async getBalance() {
-        try {
-            const response = await CustomHttp.request(config.host + '/balance', 'GET',);
-            document.getElementById('balance').innerText = response.balance + '$';
         } catch (error) {
             console.log(error);
         }

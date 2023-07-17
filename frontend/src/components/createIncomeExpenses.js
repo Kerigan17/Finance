@@ -23,7 +23,6 @@ export class CreateIncomeExpenses {
             this.typeOperation = this.typeOperationElement.value;
             this.getCategories(this.typeOperation);
             this.setCategories();
-            console.log(this.categories);
         }
 
         //изменение категории
@@ -81,8 +80,6 @@ export class CreateIncomeExpenses {
     async createNewOperation() {
         this.getValue();
 
-        console.log(typeof(this.categoryIdOperation))
-
         try {
             const result = await CustomHttp.request(config.host + '/operations', 'POST', {
                 type: this.typeOperation,
@@ -91,7 +88,6 @@ export class CreateIncomeExpenses {
                 comment: this.commentOperation.value,
                 category_id: this.categoryIdOperation,
             });
-            console.log(this.categoryIdOperation)
             location.href = '#/incAndExp';
         } catch (error) {
             console.log(error);
@@ -105,8 +101,6 @@ export class CreateIncomeExpenses {
         let dateOperation = document.getElementById('dateOperation').value;
         let commentOperation = document.getElementById('commentOperation').value;
 
-        console.log(typeCategory)
-
         try {
             const result = await CustomHttp.request(config.host + '/operations/' + this.id, 'PUT', {
                 type: typeOperation,
@@ -115,7 +109,6 @@ export class CreateIncomeExpenses {
                 comment: commentOperation,
                 category_id: typeCategory,
             });
-            console.log(this.categoryIdOperation)
             location.href = '#/incAndExp';
         } catch (error) {
             console.log(error);
