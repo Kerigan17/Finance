@@ -11,6 +11,20 @@ export class IncomeAndExpenses {
         this.periods = ['now', 'week', 'month', 'year', 'all', 'interval'];
         this.period = 'all';
         this.sortButtons = Array.from(document.getElementById('sort-list').children);
+        this.intervalInputs = Array.from(document.getElementsByClassName('interval-input'));
+        this.dateFrom = null;
+        this.dateTo = null;
+
+        this.intervalInputs.forEach(item => {
+            item.onchange = () => {
+                this.dateFrom = this.intervalInputs[0].value;
+                this.dateTo = this.intervalInputs[1].value;
+
+                if (this.period === 'interval' && this.dateFrom && this.dateTo) {
+                    this.getInfo(this.dateFrom, this.dateTo);
+                }
+            }
+        })
 
         for (let i = 0; i < this.sortButtons.length; i++) {
             this.sortButtons[i].onclick = () => {
@@ -28,13 +42,19 @@ export class IncomeAndExpenses {
         this.getInfo();
     }
 
-    async getInfo() {
+    async getInfo(dateFrom, dateTo) {
         this.response = null;
         this.tableBody.innerHTML = '';
         let that = this;
 
         try {
-            this.response = await CustomHttp.request(config.host + '/operations' + '?period=' + this.period, 'GET',);
+            if (dateFrom && dateTo) {
+                this.response = await CustomHttp.request(config.host + '/operations' + '?period=' + this.period + '&dateFrom=' + dateFrom + '&dateTo' + dateTo, 'GET',);
+                console.log(this.response)
+                console.log(typeof(dateFrom))
+            } else {
+                this.response = await CustomHttp.request(config.host + '/operations' + '?period=' + this.period, 'GET',);
+            }
         } catch (error) {
             console.log(error);
         }

@@ -14,6 +14,22 @@ export class Home {
         this.expensiveCanvas = document.getElementById('expensiveDiagram');
         this.incomeDiagram = null;
         this.expensiveDiagram = null;
+        this.intervalInputs = Array.from(document.getElementsByClassName('interval-input'));
+        this.dateFrom = null;
+        this.dateTo = null;
+
+        this.intervalInputs.forEach(item => {
+            item.onchange = () => {
+                this.dateFrom = this.intervalInputs[0].value;
+                this.dateTo = this.intervalInputs[1].value;
+
+                if (this.period === 'interval' && this.dateFrom && this.dateTo) {
+                    this.incomeDiagram.destroy();
+                    this.expensiveDiagram.destroy();
+                    this.getOperations(this.dateFrom, this.dateTo);
+                }
+            }
+        })
 
         for (let i = 0; i < this.sortButtons.length; i++) {
             this.sortButtons[i].onclick = () => {
@@ -30,10 +46,15 @@ export class Home {
         this.getOperations();
     }
 
-    async getOperations() {
+    async getOperations(dateFrom, dateTo) {
         try {
-            const result = await CustomHttp.request(config.host + '/operations' + '?period='  + this.period, 'GET',);
-            this.paintingDiagrams(result);
+            if (dateFrom && dateTo) {
+                this.response = await CustomHttp.request(config.host + '/operations' + '?period=' + this.period + '&dateFrom=' + dateFrom + '&dateTo' + dateTo, 'GET',);
+                console.log(1);
+            } else {
+                this.result = await CustomHttp.request(config.host + '/operations' + '?period='  + this.period, 'GET',);
+            }
+            this.paintingDiagrams(this.result);
         } catch (error) {
             console.log(error);
         }
@@ -52,8 +73,6 @@ export class Home {
         this.items = items;
         const labelList = [];
         const dataList = [];
-
-        console.log(this.items)
 
         this.items.forEach(item => {
             labelList.push(item.category);
