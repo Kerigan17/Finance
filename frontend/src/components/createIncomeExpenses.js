@@ -18,8 +18,6 @@ export class CreateIncomeExpenses {
         //получаю категории
         this.getCategories(this.typeOperation);
 
-
-
         //изменение типа операции
         this.typeOperationElement.onchange = () => {
             this.typeOperation = this.typeOperationElement.value;
