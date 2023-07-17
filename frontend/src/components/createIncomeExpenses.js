@@ -18,8 +18,7 @@ export class CreateIncomeExpenses {
         //получаю категории
         this.getCategories(this.typeOperation);
 
-        //задаю Id категории
-        this.categoryIdOperation = Number(this.selectCategories.value);
+
 
         //изменение типа операции
         this.typeOperationElement.onchange = () => {
@@ -49,6 +48,9 @@ export class CreateIncomeExpenses {
                 this.createNewOperation();
             }
         }
+
+        //задаю Id категории
+        this.categoryIdOperation = Number(this.selectCategories.value);
     }
 
     async getCategories(operation) {
@@ -73,7 +75,9 @@ export class CreateIncomeExpenses {
             operationItem.innerText = item.title;
 
             this.selectCategories.appendChild(operationItem);
-        })
+        });
+        this.categoryIdOperation = Number(this.categories[0].id)
+
     }
 
     async createNewOperation() {
