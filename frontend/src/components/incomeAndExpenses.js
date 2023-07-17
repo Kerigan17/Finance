@@ -7,15 +7,18 @@ export class IncomeAndExpenses {
         this.tableBody = document.getElementById('table-body');
         this.yesDelete = document.getElementById('yesDelete');
         this.noDelete = document.getElementById('noDelete');
-        this.operationId = null;
-        this.period = ['now', 'week', 'month', 'year', 'all', 'interval'];
+        this.operationId = 'all';
+        this.periods = ['now', 'week', 'month', 'year', 'all', 'interval'];
+        this.period = null;
         this.sortButtons = Array.from(document.getElementById('sort-list').children);
 
         for (let i = 0; i < this.sortButtons.length; i++) {
             this.sortButtons[i].onclick = () => {
                 this.sortButtons.forEach(item => item.classList.remove('active'))
                 this.sortButtons[i].classList.add('active');
-                console.log(this.period[i])
+                this.period = this.periods[i];
+
+                this.getInfo();
             }
         }
 
@@ -27,10 +30,11 @@ export class IncomeAndExpenses {
 
     async getInfo() {
         this.response = null;
+        this.tableBody.innerHTML = '';
         let that = this;
 
         try {
-            this.response = await CustomHttp.request(config.host + '/operations' + '?period=all', 'GET',);
+            this.response = await CustomHttp.request(config.host + '/operations' + '?period=' + this.period, 'GET',);
         } catch (error) {
             console.log(error);
         }
