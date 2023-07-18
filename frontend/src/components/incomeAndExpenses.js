@@ -32,7 +32,11 @@ export class IncomeAndExpenses {
                 this.sortButtons[i].classList.add('active');
                 this.period = this.periods[i];
 
-                this.getInfo();
+                if (this.period === 'interval' &&this.dateFrom && this.dateTo) {
+                    this.getInfo(this.dateFrom, this.dateTo);
+                } else {
+                    this.getInfo();
+                }
             }
         }
 
@@ -49,9 +53,7 @@ export class IncomeAndExpenses {
 
         try {
             if (dateFrom && dateTo) {
-                this.response = await CustomHttp.request(config.host + '/operations' + '?period=' + this.period + '&dateFrom=' + dateFrom + '&dateTo' + dateTo, 'GET',);
-                console.log(this.response)
-                console.log(typeof(dateFrom))
+                this.response = await CustomHttp.request(config.host + '/operations' + '?period=' + this.period + '&dateFrom=' + dateFrom + '&dateTo=' + dateTo, 'GET',);
             } else {
                 this.response = await CustomHttp.request(config.host + '/operations' + '?period=' + this.period, 'GET',);
             }

@@ -39,7 +39,12 @@ export class Home {
 
                 this.incomeDiagram.destroy();
                 this.expensiveDiagram.destroy();
-                this.getOperations();
+
+                if (this.period === 'interval' &&this.dateFrom && this.dateTo) {
+                    this.getOperations(this.dateFrom, this.dateTo);
+                } else {
+                    this.getOperations();
+                }
             }
         }
 
@@ -49,8 +54,7 @@ export class Home {
     async getOperations(dateFrom, dateTo) {
         try {
             if (dateFrom && dateTo) {
-                this.response = await CustomHttp.request(config.host + '/operations' + '?period=' + this.period + '&dateFrom=' + dateFrom + '&dateTo' + dateTo, 'GET',);
-                console.log(1);
+                this.result = await CustomHttp.request(config.host + '/operations' + '?period=' + this.period + '&dateFrom=' + dateFrom + '&dateTo=' + dateTo, 'GET',);
             } else {
                 this.result = await CustomHttp.request(config.host + '/operations' + '?period='  + this.period, 'GET',);
             }
@@ -62,11 +66,18 @@ export class Home {
 
     paintingDiagrams(operations) {
         this.operations = operations;
-        const incomeOperations = this.operations.filter(item => item.type === 'income');
-        const expenseOperations = this.operations.filter(item => item.type === 'expense');
+        if (this.operations !== []) {
+            const incomeOperations = this.operations.filter(item => item.type === 'income');
+            const expenseOperations = this.operations.filter(item => item.type === 'expense');
 
-        this.incomeDiagram = this.paintDiagram(this.incomeCanvas, incomeOperations);
-        this.expensiveDiagram = this.paintDiagram(this.expensiveCanvas, expenseOperations);
+            this.incomeDiagram = this.paintDiagram(this.incomeCanvas, incomeOperations);
+            this.expensiveDiagram = this.paintDiagram(this.expensiveCanvas, expenseOperations);
+        } else {
+            console.log(1)
+            this.incomeDiagram.destroy();
+            this.expensiveDiagram.destroy();
+        }
+
     }
 
     paintDiagram(diagram, items) {
