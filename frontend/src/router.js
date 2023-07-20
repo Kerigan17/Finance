@@ -4,10 +4,9 @@ import {IncomeAndExpenses} from "./components/incomeAndExpenses.js";
 import {WorkWithCategory} from "./components/work-with-category.js";
 import {CreateIncomeExpenses} from "./components/createIncomeExpenses.js";
 import {Category} from "./components/category.js";
-import {EditCategory} from "./components/edit-category";
-import {CustomHttp} from "./services/custom-http";
-import config from "../config/config";
-import {Links} from "./components/links";
+import {EditCategory} from "./components/edit-category.js";
+import {Links} from "./components/links.js";
+import {UserInfo} from "./utils/user-info.js";
 
 export class Router {
     constructor() {
@@ -37,6 +36,7 @@ export class Router {
                 styles: 'styles/home.css',
                 load: () => {
                     new Home();
+                    new UserInfo();
                 }
             },
             {
@@ -46,6 +46,7 @@ export class Router {
                 styles: 'styles/income-expenses.css',
                 load: () => {
                     new IncomeAndExpenses();
+                    new UserInfo();
                 }
             },
             {
@@ -55,6 +56,7 @@ export class Router {
                 styles: 'styles/income-expenses.css',
                 load: () => {
                     new Category('income');
+                    new UserInfo();
                 }
             },
             {
@@ -64,6 +66,7 @@ export class Router {
                 styles: 'styles/income-expenses.css',
                 load: () => {
                     new Category('expense');
+                    new UserInfo();
                 }
             },
             {
@@ -73,6 +76,7 @@ export class Router {
                 styles: 'styles/income-expenses.css',
                 load: () => {
                     new WorkWithCategory('income');
+                    new UserInfo();
                 }
             },
             {
@@ -82,6 +86,7 @@ export class Router {
                 styles: 'styles/income-expenses.css',
                 load: () => {
                     new WorkWithCategory('expense');
+                    new UserInfo();
                 }
             },
             {
@@ -91,6 +96,7 @@ export class Router {
                 styles: 'styles/income-expenses.css',
                 load: () => {
                     new CreateIncomeExpenses();
+                    new UserInfo();
                 }
             },
             {
@@ -100,6 +106,7 @@ export class Router {
                 styles: 'styles/income-expenses.css',
                 load: () => {
                     new EditCategory("income");
+                    new UserInfo();
                 }
             },
             {
@@ -109,6 +116,7 @@ export class Router {
                 styles: 'styles/income-expenses.css',
                 load: () => {
                     new EditCategory('expense');
+                    new UserInfo();
                 }
             },
             {
@@ -117,7 +125,8 @@ export class Router {
                 template: '/templates/create-income-expenses.html',
                 styles: 'styles/income-expenses.css',
                 load: () => {
-                    new CreateIncomeExpenses('edit')
+                    new CreateIncomeExpenses('edit');
+                    new UserInfo();
                 }
             }
         ]
@@ -139,7 +148,6 @@ export class Router {
             sidebar.style.display = 'none';
         } else {
             sidebar.style.display = 'flex';
-            this.getBalance();
             new Links();
         }
 
@@ -153,14 +161,5 @@ export class Router {
             title.innerText = newRoute.title;
         }
         newRoute.load();
-    }
-
-    async getBalance() {
-        try {
-            const response = await CustomHttp.request(config.host + '/balance', 'GET',);
-            document.getElementById('balance').innerText = response.balance;
-        } catch (error) {
-            console.log(error);
-        }
     }
 }

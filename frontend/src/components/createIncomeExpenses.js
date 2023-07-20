@@ -4,7 +4,7 @@ import config from "../../config/config.js";
 export class CreateIncomeExpenses {
     constructor(page) {
         this.page = page;
-        this.typeOperation = 'income';
+        this.typeOperation = localStorage.getItem('operation');
         this.amountOperation = null;
         this.dateOperation = null;
         this.commentOperation = null;
@@ -14,6 +14,10 @@ export class CreateIncomeExpenses {
         this.btnCreateOperation = document.getElementById('btnCreateOperation');
         this.selectCategories = document.getElementById('selectCategories');
         this.typeOperationElement = document.getElementById('typeOperationElement');
+        this.typeOperationElement.value = this.typeOperation;
+
+        const valueOperation = this.typeOperationElement.value;
+        console.log(valueOperation)
 
         //получаю категории
         this.getCategories(this.typeOperation);
@@ -35,10 +39,10 @@ export class CreateIncomeExpenses {
             this.id = localStorage.getItem('id');
             this.btnCreateOperation.innerText = 'Сохранить';
 
-            this.getOperation()
+            this.getOperation();
 
             this.btnCreateOperation.onclick = () => {
-                this.updateOperation()
+                this.updateOperation();
             }
         } else {
             this.btnCreateOperation.onclick = () => {
@@ -73,8 +77,10 @@ export class CreateIncomeExpenses {
 
             this.selectCategories.appendChild(operationItem);
         });
-        this.categoryIdOperation = Number(this.categories[0].id)
-
+        if (this.categories.length > 0 && this.page !== 'edit') {
+            console.log(this.selectCategories.value);
+            this.categoryIdOperation = Number(this.categories[0].id)
+        }
     }
 
     async createNewOperation() {
@@ -109,6 +115,7 @@ export class CreateIncomeExpenses {
                 comment: commentOperation,
                 category_id: typeCategory,
             });
+            console.log(result)
             location.href = '#/incAndExp';
         } catch (error) {
             console.log(error);
@@ -125,7 +132,7 @@ export class CreateIncomeExpenses {
         let commentOperation = document.getElementById('commentOperation');
 
         typeOperation.value = this.operation.type;
-        typeCategory.value = this.operation.category;
+        typeCategory.value = this.categories.find(item => item.title === this.operation.category).id;
         amountOperation.value = this.operation.amount;
         dateOperation.value = this.operation.date;
         commentOperation.value = this.operation.comment;

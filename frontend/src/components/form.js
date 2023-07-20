@@ -128,8 +128,9 @@ export class Form {
                 }
             } else {
                 try {
+                    const email = this.fields.find(item => item.name === 'email').element.value;
                     const result = await CustomHttp.request(config.host + '/login', 'POST', {
-                        email: this.fields.find(item => item.name === 'email').element.value,
+                        email: email,
                         password: this.fields.find(item => item.name === 'password').element.value,
                         rememberMe: this.rememberMe.checked
                     });
@@ -145,6 +146,11 @@ export class Form {
                         if (result.error || !result.user || !result.tokens.refreshToken || !result.tokens.accessToken) {
                             throw new Error(result.message);
                         }
+                        Auth.setUserInfo({
+                            fullName: `${result.user.name} ${result.user.lastName}`,
+                            userId: result.id,
+                            email: email
+                        })
                         Auth.setTokens(result.tokens.accessToken, result.tokens.refreshToken);
                         location.href = '#/home';
                     }

@@ -59,13 +59,14 @@
             <div id="balance-item" class="balance">Баланс: <span id="balance"></span><span>$</span></div>
             <div id="popup-balance" class="position-absolute z-1">
                 <input id="balance-value" type="number">
-                <button id="balance-btn" class="balance-btn">Сохранить</button>
+                <button id="balance-btn" class="balance-btn save">Сохранить</button>
+                <button id="balance-cancel" class="balance-btn cancel">Отмена</button>
             </div>
             <hr>
             <div class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle"
                  data-bs-toggle="dropdown" aria-expanded="false">
                 <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                <span>Малько Александр</span>
+                <span id="fullname">Малько Александр</span>
             </div>
             <ul class="dropdown-menu text-small shadow">
                 <li><a href="#/login" class="dropdown-item">Log out</a></li>

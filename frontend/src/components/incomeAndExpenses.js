@@ -7,6 +7,8 @@ export class IncomeAndExpenses {
         this.tableBody = document.getElementById('table-body');
         this.yesDelete = document.getElementById('yesDelete');
         this.noDelete = document.getElementById('noDelete');
+        this.incomeBtn = document.getElementById('income');
+        this.expenseBtn = document.getElementById('expense');
         this.operationId = null;
         this.periods = ['now', 'week', 'month', 'year', 'all', 'interval'];
         this.period = 'all';
@@ -14,6 +16,13 @@ export class IncomeAndExpenses {
         this.intervalInputs = Array.from(document.getElementsByClassName('interval-input'));
         this.dateFrom = null;
         this.dateTo = null;
+
+        this.incomeBtn.onclick = () => {
+            localStorage.setItem('operation', 'income');
+        }
+        this.expenseBtn.onclick = () => {
+            localStorage.setItem('operation', 'expense');
+        }
 
         this.intervalInputs.forEach(item => {
             item.onchange = () => {
@@ -117,8 +126,8 @@ export class IncomeAndExpenses {
             imgElement = document.createElement('img');
             imgElement.src = '../../images/pen.svg';
             imgElement.onclick = () => {
-                localStorage.removeItem('id');
                 localStorage.setItem('id', this.response[j].id);
+                localStorage.setItem('operation', this.response[j].type);
                 location.href = '#/edit-operation';
             }
             firstTdElement.appendChild(imgElement);

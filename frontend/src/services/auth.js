@@ -3,6 +3,7 @@ import config from "../../config/config.js";
 export class Auth {
     static accessTokenKey = 'accessToken';
     static refreshTokenKey = 'refreshToken';
+    static userInfoKey = 'userInfo';
 
     static async processUnauthorizedResponse() {
         const refreshToken = localStorage.getItem(this.refreshTokenKey);
@@ -35,5 +36,17 @@ export class Auth {
     static removeTokens() {
         localStorage.removeItem(this.accessTokenKey);
         localStorage.removeItem(this.refreshTokenKey);
+    }
+
+    static setUserInfo(info) {
+        localStorage.setItem(this.userInfoKey, JSON.stringify(info))
+    }
+
+    static  getUserInfo() {
+        const userInfo = localStorage.getItem(this.userInfoKey);
+        if (userInfo) {
+            return JSON.parse(userInfo);
+        }
+        return null;
     }
 }
